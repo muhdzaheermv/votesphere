@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoteSphere - Home</title>
+</head>
+<body>
+    <h1>Welcome to VoteSphere</h1>
+
+    {% if user.is_authenticated %}
+        <p>Hello, {{ user.username }}! <a href="{% url 'logout' %}">Logout</a></p>
+        <h2>Vote for a Candidate:</h2>
+        {% for candidate in candidates %}
+            <p>{{ candidate.name }} ({{ candidate.party }})  
+                <a href="{% url 'vote' candidate.id %}">Vote</a>
+            </p>
+        {% endfor %}
+        {% if message %}
+            <p style="color: green;">{{ message }}</p>
+        {% endif %}
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+    {% else %}
+        <p><a href="{% url 'login' %}">Login to Vote</a></p>
+    {% endif %}
+</body>
+</html>
